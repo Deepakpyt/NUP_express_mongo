@@ -21,19 +21,18 @@ app.set("port", port);
 
 var server = http.createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on("error", onError);
-server.on("listening", onListening);
-
 // Connecting to the MongoDB  database...
 async function connectToDatabase() {
   try {
+    console.log("Wait till it shows Listening and Connected to MongoDB...")
     await mongoose.connect("mongodb://localhost:27017/users");
 
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+    server.listen(port);
+    server.on("error", onError);
+    server.on("listening", onListening);
     console.log("Connected to MongoDB database");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
